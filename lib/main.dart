@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/ui/category/creat_or_edit_category.dart';
+import 'package:todo_app/ui/main/main_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const CreateOrEditCategory(),
+      home: const MainPage(),
       debugShowCheckedModeBanner: false,
     );
   }

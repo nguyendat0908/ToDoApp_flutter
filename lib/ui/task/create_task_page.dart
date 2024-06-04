@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_app/models/category_models.dart';
 
@@ -15,6 +16,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
   final _nameTaskTextController = TextEditingController();
   final _descTaskTextController = TextEditingController();
   CategoryModel? _categorySelected;
+  DateTime? _taskDateTimeSelected;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,6 +39,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
       children: [
         _buildTaskNameField(),
         _buildTaskDescField(),
+        if (_taskDateTimeSelected != null) _buildTaskDateTime(),
         if (_categorySelected != null) _buildTaskCategory(),
         _buildTaskActionField(),
       ],
@@ -139,6 +142,31 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
     );
   }
 
+  Widget _buildTaskDateTime() {
+    return Container(
+      margin: EdgeInsets.only(top: 15),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Task time: ',
+            style: TextStyle(
+                fontSize: 18, fontFamily: 'Lato', color: Color(0xFFAFAFAF)),
+          ),
+          Container(
+            margin: const EdgeInsets.only(left: 10, top: 2),
+            child: Text(
+              DateFormat('dd-MM-yyyy HH:mm').format(_taskDateTimeSelected!),
+              style: const TextStyle(
+                  fontSize: 16, fontFamily: 'Lato', color: Color(0xFFAFAFAF)),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildGridCategoryItems(CategoryModel category) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -187,7 +215,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               IconButton(
-                onPressed: () {},
+                onPressed: _selectTaskTime,
                 icon: Image.asset(
                   'assets/images/task_timer.png',
                   width: 24,
@@ -263,5 +291,45 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
     } else {
       // khong lam gi ca
     }
+  }
+
+  void _selectTaskTime() async {
+    final date = await showDatePicker(
+        context: context,
+        firstDate: DateTime.now(),
+        lastDate: DateTime.now().add(const Duration(days: 365)),
+        builder: (context, child) {
+          return Theme(
+              data: Theme.of(context).copyWith(
+                colorScheme: ColorScheme.dark(
+                    primary: Color(0xFF8687E7), onSurface: Colors.white),
+              ),
+              child: child!);
+        });
+    if (date == null) {
+      return;
+    }
+    if (!context.mounted) {
+      return;
+    }
+    final time = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.now(),
+        builder: (context, child) {
+          return Theme(
+              data: Theme.of(context).copyWith(
+                colorScheme: ColorScheme.dark(
+                    primary: Color(0xFF8687E7), onSurface: Colors.white),
+              ),
+              child: child!);
+        });
+    if (time == null) {
+      return;
+    }
+    final dateTimeSelected =
+        date.copyWith(hour: time.hour, minute: time.minute, second: 0);
+    setState(() {
+      _taskDateTimeSelected = dateTimeSelected;
+    });
   }
 }

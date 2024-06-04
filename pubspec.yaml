@@ -41,6 +41,7 @@ dependencies:
   flutter_iconpicker: ^3.4.5
   flutter_colorpicker: ^1.1.0
 
+  intl: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

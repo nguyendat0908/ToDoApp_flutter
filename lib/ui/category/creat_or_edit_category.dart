@@ -7,7 +7,8 @@ import 'package:todo_app/ultils/ultils.enums/color_extention.dart';
 import '../../entities/category_realm_entity.dart';
 
 class CreateOrEditCategory extends StatefulWidget {
-  const CreateOrEditCategory({super.key});
+  final String? categoryId;
+  const CreateOrEditCategory({super.key, this.categoryId});
 
   @override
   State<CreateOrEditCategory> createState() => _CreateOrEditCategoryState();
@@ -15,11 +16,13 @@ class CreateOrEditCategory extends StatefulWidget {
 
 class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
   final _nameCategoryTextController = TextEditingController();
-  // final List<Color> _colorDataSoure = [];
   // final List<Icon> _iconDataSoure = [];
-  Color _colorSelected = Colors.white;
+  Color _backgroundColorSelected = Colors.white;
   Color _iconColorSelected = Colors.white;
   IconData? _iconSelected;
+  bool get isEdit {
+    return widget.categoryId != null;
+  }
 
   @override
   void initState() {
@@ -28,16 +31,11 @@ class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
     // In duong dan lket voi realm
     final storagePath = Configuration.defaultRealmPath;
     print(storagePath);
-    // _colorDataSoure.addAll([
-    //   const Color(0xFFC9CC41),
-    //   const Color(0xFF66CC41),
-    //   const Color(0xFF41CCA7),
-    //   const Color(0xFF4181CC),
-    //   const Color(0xFF41A2CC),
-    //   const Color(0xFFCC8441),
-    //   const Color(0xFF9741CC),
-    //   const Color(0xFFCC4173),
-    // ]);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (isEdit) {
+        _findCategory(widget.categoryId!);
+      }
+    });
     // _iconDataSoure.addAll([
     //   const Icon(Icons.local_grocery_store),
     //   const Icon(Icons.work),
@@ -59,8 +57,8 @@ class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
       backgroundColor: Color(0xFF121212),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: const Text(
-          'Create new category',
+        title: Text(
+          isEdit ? 'Edit category' : 'Create new category',
           style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -183,80 +181,10 @@ class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
                 margin: EdgeInsets.only(right: 12),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(18),
-                    color: _colorSelected),
+                    color: _backgroundColorSelected),
               ),
             ),
           ),
-          // Container(
-          //   margin: const EdgeInsets.only(top: 10),
-          //   width: double.infinity,
-          //   height: 36,
-          //   child: ListView.builder(
-          //     scrollDirection: Axis.horizontal,
-          //     itemBuilder: (context, index) {
-          //       final color = _colorDataSoure.elementAt(index);
-          //       final isSelected = _colorSelected == color;
-          //       return GestureDetector(
-          //         onTap: () {
-          //           print('Chon mau thu $index');
-          //           setState(() {
-          //             _colorSelected = color;
-          //           });
-          //         },
-          //         child: Container(
-          //           width: 36,
-          //           height: 36,
-          //           margin: EdgeInsets.only(right: 12),
-          //           decoration: BoxDecoration(
-          //               borderRadius: BorderRadius.circular(18), color: color),
-          //           child: isSelected
-          //               ? Icon(
-          //                   Icons.check,
-          //                   color: Colors.white,
-          //                   size: 20,
-          //                 )
-          //               : null,
-          //         ),
-          //       );
-          //     },
-          //     itemCount: _colorDataSoure.length,
-          //   ),
-          // ),
-          // Container(
-          //   margin: const EdgeInsets.only(top: 10),
-          //   width: double.infinity,
-          //   height: 36,
-          //   child: ListView.builder(
-          //     scrollDirection: Axis.horizontal,
-          //     itemBuilder: (context, index) {
-          //       final color = _colorDataSoure.elementAt(index);
-          //       final isSelected = _colorSelected == color;
-          //       return GestureDetector(
-          //         onTap: () {
-          //           print('Chon mau thu $index');
-          //           setState(() {
-          //             _colorSelected = color;
-          //           });
-          //         },
-          //         child: Container(
-          //           width: 36,
-          //           height: 36,
-          //           margin: EdgeInsets.only(right: 12),
-          //           decoration: BoxDecoration(
-          //               borderRadius: BorderRadius.circular(18), color: color),
-          //           child: isSelected
-          //               ? Icon(
-          //                   Icons.check,
-          //                   color: Colors.white,
-          //                   size: 20,
-          //                 )
-          //               : null,
-          //         ),
-          //       );
-          //     },
-          //     itemCount: _colorDataSoure.length,
-          //   ),
-          // ),
         ],
       ),
     );
@@ -308,7 +236,7 @@ class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
                 height: 64,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
-                  color: _colorSelected,
+                  color: _backgroundColorSelected,
                 ),
                 child: Icon(
                   _iconSelected,
@@ -360,13 +288,19 @@ class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 24),
             child: ElevatedButton(
-                onPressed: _onHandleCreateCategory,
+                onPressed: () {
+                  if (isEdit) {
+                    _editCategory();
+                  } else {
+                    _onHandleCreateCategory();
+                  }
+                },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF8875FF),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(4))),
-                child: const Text(
-                  'Create Category',
+                child: Text(
+                  isEdit ? 'Done' : 'Create Category',
                   style: TextStyle(
                       fontSize: 16, fontFamily: 'Lato', color: Colors.white),
                 )),
@@ -387,7 +321,7 @@ class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
       var config = Configuration.local([CategoryRealmEntity.schema]);
       var realm = Realm(config);
 
-      final backgroundColorHex = _colorSelected.toHex();
+      final backgroundColorHex = _backgroundColorSelected.toHex();
       var catogery = CategoryRealmEntity(ObjectId(), categoryName,
           iconCodePoint: _iconSelected?.codePoint,
           backgroundColorHex: backgroundColorHex,
@@ -398,7 +332,7 @@ class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
       });
       // Reset lai du lieu sau khi tao thanh cong
       _nameCategoryTextController.text = '';
-      _colorSelected = const Color(0xFFC9CC41);
+      _backgroundColorSelected = const Color(0xFFC9CC41);
       _iconColorSelected = const Color(0xFF21A300);
       _iconSelected = null;
       setState(() {});
@@ -425,10 +359,10 @@ class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
           return AlertDialog(
             content: SingleChildScrollView(
               child: ColorPicker(
-                pickerColor: _colorSelected,
+                pickerColor: _backgroundColorSelected,
                 onColorChanged: (Color newColor) {
                   setState(() {
-                    _colorSelected = newColor;
+                    _backgroundColorSelected = newColor;
                   });
                   Navigator.pop(context);
                 },
@@ -458,8 +392,8 @@ class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
         });
   }
 
-  void _showAlert(String title, String message) {
-    showDialog(
+  Future<void> _showAlert(String title, String message) async {
+    await showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
@@ -474,5 +408,69 @@ class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
             ],
           );
         });
+  }
+
+  // Tim category
+  void _findCategory(String id) {
+    // Mo realm chuan bi ghi du lieu
+    var config = Configuration.local([CategoryRealmEntity.schema]);
+    var realm = Realm(config);
+    // Tim theo id
+    final category =
+        realm.find<CategoryRealmEntity>(ObjectId.fromHexString(id));
+    if (category == null) {
+      return;
+    }
+    _nameCategoryTextController.text = category.name;
+    if (category.iconCodePoint != null) {
+      _iconSelected = IconData(category.iconCodePoint!, fontFamily: "Lato");
+    }
+    if (category.backgroundColorHex != null) {
+      _backgroundColorSelected = HexColor(category.backgroundColorHex!);
+    }
+    if (category.iconColorHex != null) {
+      _iconColorSelected = HexColor(category.iconColorHex!);
+    }
+    setState(() {});
+  }
+
+  Future<void> _editCategory() async {
+    try {
+      final categoryName = _nameCategoryTextController.text;
+      if (categoryName.isEmpty) {
+        // Khong lam gi ca
+        return;
+      }
+      // Mo realm chuan bi ghi du lieu
+      var config = Configuration.local([CategoryRealmEntity.schema]);
+      var realm = Realm(config);
+
+      final category = realm.find<CategoryRealmEntity>(
+          ObjectId.fromHexString(widget.categoryId!));
+      if (category == null) {
+        return;
+      }
+      // Luu len realm
+      await realm.writeAsync(() {
+        category.name = categoryName;
+        category.iconCodePoint = _iconSelected?.codePoint;
+        category.backgroundColorHex = _backgroundColorSelected.toHex();
+        category.iconColorHex = _iconColorSelected.toHex();
+      });
+      // Reset lai du lieu sau khi tao thanh cong
+      _nameCategoryTextController.text = '';
+      _backgroundColorSelected = const Color(0xFFC9CC41);
+      _iconColorSelected = const Color(0xFF21A300);
+      _iconSelected = null;
+      setState(() {});
+      // Show alert len man hinh nguoi dung
+      await _showAlert('Successfully', 'Edit category!');
+      if (context.mounted) {
+        Navigator.pop(context);
+      }
+    } catch (e) {
+      print(e);
+      _showAlert('Fail', 'No edit category!');
+    }
   }
 }

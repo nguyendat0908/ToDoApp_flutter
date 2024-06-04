@@ -50,10 +50,10 @@ class CategoryRealmEntity extends $CategoryRealmEntity
       RealmObjectBase.set(this, 'backgroundColorHex', value);
 
   @override
-  String? get iconColorColorHex =>
+  String? get iconColorHex =>
       RealmObjectBase.get<String>(this, 'iconColorColorHex') as String?;
   @override
-  set iconColorColorHex(String? value) =>
+  set iconColorHex(String? value) =>
       RealmObjectBase.set(this, 'iconColorColorHex', value);
 
   @override
@@ -75,7 +75,7 @@ class CategoryRealmEntity extends $CategoryRealmEntity
       'name': name.toEJson(),
       'iconCodePoint': iconCodePoint.toEJson(),
       'backgroundColorHex': backgroundColorHex.toEJson(),
-      'iconColorColorHex': iconColorColorHex.toEJson(),
+      'iconColorColorHex': iconColorHex.toEJson(),
     };
   }
 

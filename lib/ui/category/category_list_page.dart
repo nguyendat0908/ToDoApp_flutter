@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:realm/realm.dart';
 import 'package:todo_app/models/category_models.dart';
+import 'package:todo_app/ui/category/creat_or_edit_category.dart';
 
 import '../../entities/category_realm_entity.dart';
+import '../../ultils/ultils.enums/color_extention.dart';
 
 class CategoryListPage extends StatefulWidget {
   const CategoryListPage({super.key});
@@ -13,6 +15,7 @@ class CategoryListPage extends StatefulWidget {
 
 class _CategoryListPageState extends State<CategoryListPage> {
   List<CategoryModel> categoryListDataSource = [];
+  bool _isEditMode = false;
 
   @override
   void initState() {
@@ -40,15 +43,17 @@ class _CategoryListPageState extends State<CategoryListPage> {
         ),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _buildChooseCategoryTitle(),
-            _buildGridCategoryList(),
-            _buildCreateCategoryButton()
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _buildChooseCategoryTitle(),
+              _buildGridCategoryList(),
+              _buildCreateCategoryButton()
+            ],
+          ),
         ),
       ),
     );
@@ -79,58 +84,130 @@ class _CategoryListPageState extends State<CategoryListPage> {
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3, childAspectRatio: 0.7),
       itemBuilder: (context, index) {
+        final isLastItem = index == categoryListDataSource.length;
+        if (isLastItem) {
+          return _buildGridCategoryItemCreateNew();
+        }
         final category = categoryListDataSource.elementAt(index);
-        return _buildGridCategoryItems(category);
+        return _buildGridCategoryItem(category);
       },
-      itemCount: categoryListDataSource.length,
+      itemCount: categoryListDataSource.length + 1,
     );
   }
 
-  Widget _buildGridCategoryItems(CategoryModel category) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Container(
-          margin: const EdgeInsets.only(top: 10),
-          width: 64,
-          height: 64,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            color: Color(0xFFCCFF88),
+  Widget _buildGridCategoryItem(CategoryModel category) {
+    return GestureDetector(
+      onTap: () {
+        _onHandleClickCategoryItem(category);
+      },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            margin: const EdgeInsets.only(top: 10),
+            width: 64,
+            height: 64,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: category.backgroundColorHex != null
+                  ? HexColor(category.backgroundColorHex!)
+                  : Colors.white,
+              border: Border.all(
+                color: _isEditMode ? Colors.red : Colors.transparent,
+                width: _isEditMode ? 2 : 0,
+              ),
+            ),
+            child: category.iconCodePoint != null
+                ? Icon(
+                    IconData(category.iconCodePoint!),
+                    color: category.iconColorHex != null
+                        ? HexColor(category.iconColorHex!)
+                        : Colors.white,
+                    size: 30,
+                  )
+                : null,
           ),
-          child: category.iconCodePoint != null
-              ? Icon(
-                  IconData(category.iconCodePoint!),
-                  color: Color(0xFF21A300),
-                  size: 20,
-                )
-              : null,
-        ),
-        Container(
-          margin: EdgeInsets.only(top: 10),
-          child: Text(
-            'Grocery',
-            style: TextStyle(fontSize: 14, color: Colors.white),
+          Container(
+            margin: EdgeInsets.only(top: 10),
+            child: Text(
+              category.name,
+              style: TextStyle(fontSize: 14, color: Colors.white),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
+    );
+  }
+
+  // Tạo icon create new
+  Widget _buildGridCategoryItemCreateNew() {
+    return GestureDetector(
+      onTap: () {
+        _gotoCreateCategoryPage();
+      },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            margin: const EdgeInsets.only(top: 10),
+            width: 64,
+            height: 64,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: Color(0xFF80FFD1),
+            ),
+            child: Icon(
+              Icons.add,
+              color: Color(0xFF00A369),
+              size: 20,
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 10),
+            child: Text(
+              'Create New',
+              style: TextStyle(fontSize: 14, color: Colors.white),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildCreateCategoryButton() {
     return Container(
-      width: double.infinity,
-      child: ElevatedButton(
-          onPressed: () {},
-          style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF8687E7),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4))),
-          child: const Text(
-            'Add Category',
-            style: TextStyle(fontSize: 16, color: Colors.white),
-          )),
+      margin: const EdgeInsets.only(top: 108, bottom: 20),
+      child: Row(
+        children: [
+          TextButton(
+              onPressed: () {},
+              child: Text(
+                'CANCEL',
+                style: TextStyle(
+                    fontSize: 16, fontFamily: 'Lato', color: Color(0xFF8687E7)),
+              )),
+          const Spacer(),
+          Container(
+            child: ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    _isEditMode = !_isEditMode;
+                  });
+                },
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF8875FF),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4))),
+                child: Text(
+                  _isEditMode ? "Cancel Edit" : "Edit Category",
+                  style: const TextStyle(
+                      fontSize: 16, fontFamily: 'Lato', color: Colors.white),
+                )),
+          )
+        ],
+      ),
     );
   }
 
@@ -147,10 +224,35 @@ class _CategoryListPageState extends State<CategoryListPage> {
           name: e.name,
           iconCodePoint: e.iconCodePoint,
           backgroundColorHex: e.backgroundColorHex,
-          iconColorColorHex: e.iconColorColorHex);
+          iconColorHex: e.iconColorHex);
     }).toList();
     setState(() {
       categoryListDataSource = categoryModels;
     });
+  }
+
+  void _gotoCreateCategoryPage() {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const CreateOrEditCategory()));
+  }
+
+  void _onHandleClickCategoryItem(CategoryModel category) {
+    if (_isEditMode) {
+      // Di den man hinh edit
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => CreateOrEditCategory(
+                    categoryId: category.id,
+                  )));
+    } else {
+      Navigator.pop(context, {
+        "categoryId": category.id,
+        "name": category.name,
+        "iconCodePoint": category.iconCodePoint,
+        "backgroundColorHex": category.backgroundColorHex,
+        "iconColorHex": category.iconColorHex,
+      });
+    }
   }
 }

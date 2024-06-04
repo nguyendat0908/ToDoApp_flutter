@@ -3,12 +3,12 @@ class CategoryModel {
   String name;
   int? iconCodePoint;
   String? backgroundColorHex;
-  String? iconColorColorHex;
+  String? iconColorHex;
 
   CategoryModel(
       {required this.id,
       required this.name,
       this.iconCodePoint,
       this.backgroundColorHex,
-      this.iconColorColorHex});
+      this.iconColorHex});
 }

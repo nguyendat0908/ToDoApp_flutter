@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/models/category_models.dart';
 
+import '../../ultils/ultils.enums/color_extention.dart';
 import '../category/category_list_page.dart';
 
 class CreateTaskPage extends StatefulWidget {
@@ -12,6 +14,7 @@ class CreateTaskPage extends StatefulWidget {
 class _CreateTaskPageState extends State<CreateTaskPage> {
   final _nameTaskTextController = TextEditingController();
   final _descTaskTextController = TextEditingController();
+  CategoryModel? _categorySelected;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -34,6 +37,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
       children: [
         _buildTaskNameField(),
         _buildTaskDescField(),
+        if (_categorySelected != null) _buildTaskCategory(),
         _buildTaskActionField(),
       ],
     ));
@@ -114,6 +118,63 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
     );
   }
 
+  Widget _buildTaskCategory() {
+    return Container(
+      margin: EdgeInsets.only(top: 15),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Task category',
+            style: TextStyle(
+                fontSize: 18, fontFamily: 'Lato', color: Color(0xFFFFFFFF)),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 10),
+            child: _buildGridCategoryItems(_categorySelected!),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildGridCategoryItems(CategoryModel category) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          margin: const EdgeInsets.only(top: 10),
+          width: 64,
+          height: 64,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: category.backgroundColorHex != null
+                ? HexColor(category.backgroundColorHex!)
+                : Colors.white,
+          ),
+          child: category.iconCodePoint != null
+              ? Icon(
+                  IconData(category.iconCodePoint!),
+                  color: category.iconColorHex != null
+                      ? HexColor(category.iconColorHex!)
+                      : Colors.white,
+                  size: 30,
+                )
+              : null,
+        ),
+        Container(
+          margin: EdgeInsets.only(top: 10),
+          child: Text(
+            category.name,
+            style: TextStyle(fontSize: 14, color: Colors.white),
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget _buildTaskActionField() {
     return Container(
       margin: EdgeInsets.only(top: 10),
@@ -169,11 +230,38 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
     );
   }
 
-  void _showDialogChooseCategory() {
-    showGeneralDialog(
+  void _showDialogChooseCategory() async {
+    final result = await showGeneralDialog(
         context: context,
+        barrierLabel: "",
+        barrierDismissible: true,
+        barrierColor: Colors.black.withOpacity(0.5),
         pageBuilder: (_, __, ___) {
           return CategoryListPage();
         });
+    print(result);
+    if (result != null && result is Map<String, dynamic>) {
+      // thuc hien
+      final categoryId = result["categoryId"];
+      if (categoryId == null) {
+        return;
+      }
+      final name = result["name"];
+      final iconCodePoint = result["iconCodePoint"];
+      final backgroundColorHex = result["backgroundColorHex"];
+      final iconColorHex = result["iconColorHex"];
+
+      final categoryModel = CategoryModel(
+          id: categoryId,
+          name: name,
+          iconCodePoint: iconCodePoint,
+          backgroundColorHex: backgroundColorHex,
+          iconColorHex: iconColorHex);
+      setState(() {
+        _categorySelected = categoryModel;
+      });
+    } else {
+      // khong lam gi ca
+    }
   }
 }

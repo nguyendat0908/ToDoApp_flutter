@@ -9,5 +9,5 @@ class $CategoryRealmEntity {
   late String name;
   late int? iconCodePoint; // De luu icon trong flutter
   late String? backgroundColorHex; // Color hex String
-  late String? iconColorColorHex; // Color hex String
+  late String? iconColorHex; // Color hex String
 }

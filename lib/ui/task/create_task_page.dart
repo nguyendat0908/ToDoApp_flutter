@@ -4,6 +4,7 @@ import 'package:todo_app/models/category_models.dart';
 
 import '../../ultils/ultils.enums/color_extention.dart';
 import '../category/category_list_page.dart';
+import '../task_priority/task_priority_list_page.dart';
 
 class CreateTaskPage extends StatefulWidget {
   const CreateTaskPage({super.key});
@@ -17,6 +18,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
   final _descTaskTextController = TextEditingController();
   CategoryModel? _categorySelected;
   DateTime? _taskDateTimeSelected;
+  int? _taskPrioritySelected;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -41,6 +43,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
         _buildTaskDescField(),
         if (_taskDateTimeSelected != null) _buildTaskDateTime(),
         if (_categorySelected != null) _buildTaskCategory(),
+        if (_taskPrioritySelected != null) _buildTaskPriority(),
         _buildTaskActionField(),
       ],
     ));
@@ -121,20 +124,63 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
     );
   }
 
+  Widget _buildTaskPriority() {
+    return Container(
+      margin: EdgeInsets.only(top: 15),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Text(
+            'Task priority:',
+            style: TextStyle(
+                fontSize: 18, fontFamily: 'Lato', color: Color(0xFFAFAFAF)),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 4, left: 4),
+            child: Container(
+              decoration: BoxDecoration(
+                  border: Border.all(width: 1, color: Color(0xFF8687E7)),
+                  borderRadius: BorderRadius.circular(4)),
+              padding: EdgeInsets.all(8),
+              child: Row(
+                children: [
+                  Image.asset(
+                    "assets/images/task_flag.png",
+                    width: 24,
+                    height: 24,
+                    fit: BoxFit.fill,
+                  ),
+                  Text(
+                    _taskPrioritySelected!.toString(),
+                    style: const TextStyle(
+                        fontSize: 18,
+                        fontFamily: 'Lato',
+                        color: Color(0xFFAFAFAF)),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildTaskCategory() {
     return Container(
       margin: EdgeInsets.only(top: 15),
-      child: Column(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Text(
-            'Task category',
+            'Task category: ',
             style: TextStyle(
-                fontSize: 18, fontFamily: 'Lato', color: Color(0xFFFFFFFF)),
+                fontSize: 18, fontFamily: 'Lato', color: Color(0xFFAFAFAF)),
           ),
           Container(
-            margin: EdgeInsets.only(top: 10),
+            margin: EdgeInsets.only(top: 10, left: 10),
             child: _buildGridCategoryItems(_categorySelected!),
           ),
         ],
@@ -224,7 +270,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                 ),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: _showDialogChoosePriority,
                 icon: Image.asset(
                   'assets/images/task_flag.png',
                   width: 24,
@@ -256,6 +302,27 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
         ],
       ),
     );
+  }
+
+  void _showDialogChoosePriority() async {
+    final result = await showGeneralDialog(
+        context: context,
+        barrierLabel: "",
+        barrierDismissible: true,
+        barrierColor: Colors.black.withOpacity(0.5),
+        pageBuilder: (_, __, ___) {
+          return TaskPriorityListPage();
+        });
+    print(result);
+    if (result != null && result is Map<String, dynamic>) {
+      // thuc hien
+      final priority = result["priority"];
+      setState(() {
+        _taskPrioritySelected = priority;
+      });
+    } else {
+      // khong lam gi ca
+    }
   }
 
   void _showDialogChooseCategory() async {

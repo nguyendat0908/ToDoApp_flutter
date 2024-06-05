@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_app/domains/authentication_repository.dart';
 import 'package:todo_app/ui/login/bloc/login_cubit.dart';
 import 'package:todo_app/ui/register/register_page.dart';
 
@@ -9,9 +10,15 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => LoginCubit(),
-      child: LoginView(),
+    return SafeArea(
+      child: BlocProvider(
+        create: (context) {
+          final authenticationRepository =
+              context.read<AuthenticationRepository>();
+          return LoginCubit(authenticationRepository: authenticationRepository);
+        },
+        child: const LoginView(),
+      ),
     );
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_app/ui/login/bloc/login_cubit.dart';
 import 'package:todo_app/ui/register/register_page.dart';
 
 class LoginPage extends StatelessWidget {
@@ -7,22 +9,45 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => LoginCubit(),
+      child: LoginView(),
+    );
+  }
+}
+
+class LoginView extends StatefulWidget {
+  const LoginView({super.key});
+
+  @override
+  State<LoginView> createState() => _LoginViewState();
+}
+
+class _LoginViewState extends State<LoginView> {
+  final _formKey = GlobalKey<FormState>();
+  var _autoVaildateMode = AutovalidateMode.disabled;
+  var _emailTextController = TextEditingController();
+  var _passwordController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF121212),
       appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          leading: IconButton(
-            onPressed: () {
-              if (Navigator.canPop(context)) {
-                Navigator.pop(context);
-              }
-            },
-            icon: const Icon(
-              Icons.arrow_back_ios_new_outlined,
-              size: 18,
-              color: Colors.white,
-            ),
-          )),
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          onPressed: () {
+            if (Navigator.canPop(context)) {
+              Navigator.pop(context);
+            }
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios_new_outlined,
+            size: 18,
+            color: Colors.white,
+          ),
+        ),
+      ),
       body: SafeArea(
         top: false,
         child: SingleChildScrollView(
@@ -63,21 +88,23 @@ class LoginPage extends StatelessWidget {
 
   Widget _buildFormLogin() {
     return Form(
+        key: _formKey,
+        autovalidateMode: _autoVaildateMode,
         child: Container(
-      margin: EdgeInsets.symmetric(horizontal: 24),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildUserNameField(),
-          const SizedBox(
-            height: 25,
+          margin: EdgeInsets.symmetric(horizontal: 24),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildUserNameField(),
+              const SizedBox(
+                height: 25,
+              ),
+              _buildPasswordField(),
+              _buildLoginButton(),
+            ],
           ),
-          _buildPasswordField(),
-          _buildLoginButton(),
-        ],
-      ),
-    ));
+        ));
   }
 
   Widget _buildUserNameField() {
@@ -95,6 +122,7 @@ class LoginPage extends StatelessWidget {
         Container(
           margin: const EdgeInsets.only(top: 8),
           child: TextFormField(
+            controller: _emailTextController,
             decoration: InputDecoration(
                 hintText: "Enter your Username",
                 hintStyle: TextStyle(
@@ -104,6 +132,20 @@ class LoginPage extends StatelessWidget {
                 ),
                 fillColor: Color(0xFF1D1D1D),
                 filled: true),
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return "Email is required"; // Yêu cầu nhập email
+              }
+              final bool emailValid = RegExp(
+                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                  .hasMatch(value);
+              // Khi email hợp lệ
+              if (emailValid) {
+                return null;
+              } else {
+                return "Invalid email!";
+              }
+            },
             style: TextStyle(
                 color: Colors.white.withOpacity(0.87),
                 fontSize: 16,
@@ -129,6 +171,7 @@ class LoginPage extends StatelessWidget {
         Container(
           margin: const EdgeInsets.only(top: 8),
           child: TextFormField(
+            controller: _passwordController,
             decoration: InputDecoration(
                 hintText: "* * * * * * * * * * * *",
                 hintStyle: TextStyle(
@@ -138,6 +181,15 @@ class LoginPage extends StatelessWidget {
                 ),
                 fillColor: Color(0xFF1D1D1D),
                 filled: true),
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return "Password is required";
+              }
+              if (value.length < 6) {
+                return "Password must have 6 digits";
+              }
+              return null;
+            },
             style: TextStyle(
                 color: Colors.white.withOpacity(0.87),
                 fontSize: 16,
@@ -155,7 +207,7 @@ class LoginPage extends StatelessWidget {
       height: 48,
       margin: EdgeInsets.only(top: 70),
       child: ElevatedButton(
-          onPressed: () {}, // Muốn disabled thì để null
+          onPressed: _onHandleLoginSubmit, // Muốn disabled thì để null
           style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF8875FF),
               shape: RoundedRectangleBorder(
@@ -305,7 +357,7 @@ class LoginPage extends StatelessWidget {
             ),
             children: [
               TextSpan(
-                  text: 'Register',
+                  text: ' Register',
                   style: TextStyle(
                     fontSize: 12,
                     fontFamily: 'Lato',
@@ -323,5 +375,24 @@ class LoginPage extends StatelessWidget {
   void _gotoRegisterPage(BuildContext context) {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => RegisterPage()));
+  }
+
+  void _onHandleLoginSubmit() {
+    final loginCubit = BlocProvider.of<LoginCubit>(context);
+    final email = _emailTextController.text;
+    final password = _passwordController.text;
+    loginCubit.login(email, password);
+
+    if (_autoVaildateMode == AutovalidateMode.disabled) {
+      setState(() {
+        _autoVaildateMode = AutovalidateMode.always;
+      });
+    }
+    final isVaild = _formKey.currentState?.validate() ?? false;
+    if (isVaild) {
+      // Call firebase login
+    } else {
+      // Không làm gì cả
+    }
   }
 }

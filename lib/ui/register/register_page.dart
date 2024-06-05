@@ -48,7 +48,7 @@ class RegisterPage extends StatelessWidget {
 
   Widget _buildPageTitle() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20).copyWith(top: 40),
+      margin: const EdgeInsets.symmetric(horizontal: 20).copyWith(top: 40),
       child: Text(
         'Register',
         style: TextStyle(
@@ -64,7 +64,7 @@ class RegisterPage extends StatelessWidget {
   Widget _buildFormRegister() {
     return Form(
         child: Container(
-      margin: EdgeInsets.symmetric(horizontal: 24),
+      margin: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,12 +101,12 @@ class RegisterPage extends StatelessWidget {
           child: TextFormField(
             decoration: InputDecoration(
                 hintText: "Enter your Username",
-                hintStyle: TextStyle(
+                hintStyle: const TextStyle(
                     color: Color(0xFF535353), fontSize: 16, fontFamily: 'Lato'),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4),
                 ),
-                fillColor: Color(0xFF1D1D1D),
+                fillColor: const Color(0xFF1D1D1D),
                 filled: true),
             style: TextStyle(
                 color: Colors.white.withOpacity(0.87),
@@ -135,12 +135,12 @@ class RegisterPage extends StatelessWidget {
           child: TextFormField(
             decoration: InputDecoration(
                 hintText: "* * * * * * * * * * * *",
-                hintStyle: TextStyle(
+                hintStyle: const TextStyle(
                     color: Color(0xFF535353), fontSize: 16, fontFamily: 'Lato'),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4),
                 ),
-                fillColor: Color(0xFF1D1D1D),
+                fillColor: const Color(0xFF1D1D1D),
                 filled: true),
             style: TextStyle(
                 color: Colors.white.withOpacity(0.87),
@@ -170,12 +170,12 @@ class RegisterPage extends StatelessWidget {
           child: TextFormField(
             decoration: InputDecoration(
                 hintText: "* * * * * * * * * * * *",
-                hintStyle: TextStyle(
+                hintStyle: const TextStyle(
                     color: Color(0xFF535353), fontSize: 16, fontFamily: 'Lato'),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4),
                 ),
-                fillColor: Color(0xFF1D1D1D),
+                fillColor: const Color(0xFF1D1D1D),
                 filled: true),
             style: TextStyle(
                 color: Colors.white.withOpacity(0.87),
@@ -192,7 +192,7 @@ class RegisterPage extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: 48,
-      margin: EdgeInsets.only(top: 70),
+      margin: const EdgeInsets.only(top: 70),
       child: ElevatedButton(
           onPressed: () {}, // Muốn disabled thì để null
           style: ElevatedButton.styleFrom(
@@ -200,7 +200,7 @@ class RegisterPage extends StatelessWidget {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(4)),
               disabledBackgroundColor: Color(0xFF8687E7).withOpacity(0.5)),
-          child: Text(
+          child: const Text(
             'Register',
             style: TextStyle(
                 fontSize: 16, fontFamily: 'Lato', color: Colors.white),
@@ -210,8 +210,8 @@ class RegisterPage extends StatelessWidget {
 
   Widget _buildOrSplitDivider() {
     return Container(
-      margin: EdgeInsets.only(top: 45, bottom: 40),
-      padding: EdgeInsets.symmetric(horizontal: 24),
+      margin: const EdgeInsets.only(top: 45, bottom: 40),
+      padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Row(
         children: [
           Expanded(
@@ -273,7 +273,7 @@ class RegisterPage extends StatelessWidget {
                 fit: BoxFit.fill,
               ),
               Container(
-                margin: EdgeInsets.only(left: 10),
+                margin: const EdgeInsets.only(left: 10),
                 child: Text(
                   'Register with Google',
                   style: TextStyle(
@@ -316,7 +316,7 @@ class RegisterPage extends StatelessWidget {
                 fit: BoxFit.fill,
               ),
               Container(
-                margin: EdgeInsets.only(left: 10),
+                margin: const EdgeInsets.only(left: 10),
                 child: Text(
                   'Register with Apple',
                   style: TextStyle(
@@ -332,12 +332,12 @@ class RegisterPage extends StatelessWidget {
 
   Widget _buildHaveAccount(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 46, bottom: 20),
+      margin: const EdgeInsets.only(top: 46, bottom: 20),
       alignment: Alignment.center,
       child: RichText(
         text: TextSpan(
             text: 'Already have an account?',
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 12,
               fontFamily: 'Lato',
               color: Color(0xFF979797),
@@ -361,6 +361,6 @@ class RegisterPage extends StatelessWidget {
 
   void _gotoLoginPage(BuildContext context) {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => LoginPage()));
+        context, MaterialPageRoute(builder: (context) => LoginView()));
   }
 }

@@ -33,8 +33,8 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   final _formKey = GlobalKey<FormState>();
   var _autoVaildateMode = AutovalidateMode.disabled;
-  var _emailTextController = TextEditingController();
-  var _passwordController = TextEditingController();
+  final _emailTextController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

@@ -71,21 +71,18 @@ class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
   }
 
   Widget _buildBodyPageScreen() {
-    return Padding(
-      padding: MediaQuery.of(context).viewInsets,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildCategoryNameFiled(),
-          _buildCategoryChooseIconFiled(),
-          _buildCategoryChooseBackgroundColorFiled(),
-          _buildCategoryChooseIconAndTextColorFiled(),
-          _buildCategoryPreview(),
-          const Spacer(),
-          _buildCancelAndCreateOrEditButton(),
-        ],
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildCategoryNameFiled(),
+        _buildCategoryChooseIconFiled(),
+        _buildCategoryChooseBackgroundColorFiled(),
+        _buildCategoryChooseIconAndTextColorFiled(),
+        _buildCategoryPreview(),
+        const Spacer(),
+        _buildCancelAndCreateOrEditButton(),
+      ],
     );
   }
 

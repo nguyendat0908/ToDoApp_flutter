@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_app/ui/task/create_task_page.dart';
 
@@ -31,6 +32,14 @@ class _MainPageState extends State<MainPage> {
       ),
       Container(
         color: Colors.orange,
+        child: SafeArea(
+          child: TextButton(
+            onPressed: () {
+              FirebaseAuth.instance.signOut();
+            },
+            child: Text('Logout'),
+          ),
+        ),
       ),
     ];
   }

@@ -1,6 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/ui/login/login_page.dart';
+import 'package:todo_app/ui/register/bloc/register_cubit.dart';
+
+import '../../domains/authentication_repository.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
@@ -23,26 +27,49 @@ class RegisterPage extends StatelessWidget {
               color: Colors.white,
             ),
           )),
-      body: SafeArea(
-        top: false,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildPageTitle(),
-              const SizedBox(
-                height: 53,
-              ),
-              _buildFormRegister(),
-              _buildOrSplitDivider(),
-              _buildSocialRegister(),
-              _buildHaveAccount(context),
-            ],
-          ),
+      body: BlocProvider(
+          create: (BuildContext context) {
+            final authenticationRepository =
+                context.read<AuthenticationRepository>();
+            return RegisterCubit(
+                authenticationRepository: authenticationRepository);
+          },
+          child: const RegisterView()),
+      resizeToAvoidBottomInset: false,
+    );
+  }
+}
+
+class RegisterView extends StatefulWidget {
+  const RegisterView({super.key});
+
+  @override
+  State<RegisterView> createState() => _RegisterViewState();
+}
+
+class _RegisterViewState extends State<RegisterView> {
+  final _emailTextController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildPageTitle(),
+            const SizedBox(
+              height: 53,
+            ),
+            _buildFormRegister(),
+            _buildOrSplitDivider(),
+            _buildSocialRegister(),
+            _buildHaveAccount(context),
+          ],
         ),
       ),
-      resizeToAvoidBottomInset: false,
     );
   }
 
@@ -99,6 +126,7 @@ class RegisterPage extends StatelessWidget {
         Container(
           margin: const EdgeInsets.only(top: 8),
           child: TextFormField(
+            controller: _emailTextController,
             decoration: InputDecoration(
                 hintText: "Enter your Username",
                 hintStyle: const TextStyle(
@@ -133,6 +161,7 @@ class RegisterPage extends StatelessWidget {
         Container(
           margin: const EdgeInsets.only(top: 8),
           child: TextFormField(
+            controller: _passwordController,
             decoration: InputDecoration(
                 hintText: "* * * * * * * * * * * *",
                 hintStyle: const TextStyle(
@@ -194,7 +223,7 @@ class RegisterPage extends StatelessWidget {
       height: 48,
       margin: const EdgeInsets.only(top: 70),
       child: ElevatedButton(
-          onPressed: () {}, // Muốn disabled thì để null
+          onPressed: _onTapRegister, // Muốn disabled thì để null
           style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF8875FF),
               shape: RoundedRectangleBorder(
@@ -362,5 +391,12 @@ class RegisterPage extends StatelessWidget {
   void _gotoLoginPage(BuildContext context) {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => LoginView()));
+  }
+
+  void _onTapRegister() {
+    final registerCubit = context.read<RegisterCubit>();
+    final email = _emailTextController.text;
+    final password = _passwordController.text;
+    registerCubit.register(email, password);
   }
 }

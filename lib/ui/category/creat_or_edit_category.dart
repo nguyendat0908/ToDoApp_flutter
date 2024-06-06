@@ -16,7 +16,6 @@ class CreateOrEditCategory extends StatefulWidget {
 
 class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
   final _nameCategoryTextController = TextEditingController();
-  // final List<Icon> _iconDataSoure = [];
   Color _backgroundColorSelected = Colors.white;
   Color _iconColorSelected = Colors.white;
   IconData? _iconSelected;
@@ -26,7 +25,6 @@ class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     // In duong dan lket voi realm
     final storagePath = Configuration.defaultRealmPath;
@@ -36,30 +34,17 @@ class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
         _findCategory(widget.categoryId!);
       }
     });
-    // _iconDataSoure.addAll([
-    //   const Icon(Icons.local_grocery_store),
-    //   const Icon(Icons.work),
-    //   const Icon(Icons.sports),
-    //   const Icon(Icons.design_services),
-    //   const Icon(Icons.book),
-    //   const Icon(Icons.social_distance),
-    //   const Icon(Icons.music_note),
-    //   const Icon(Icons.health_and_safety),
-    //   const Icon(Icons.movie),
-    //   const Icon(Icons.home),
-    //   const Icon(Icons.create),
-    // ]);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF121212),
+      backgroundColor: const Color(0xFF121212),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         title: Text(
           isEdit ? 'Edit category' : 'Create new category',
-          style: TextStyle(
+          style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
               color: Colors.white,
@@ -67,6 +52,7 @@ class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
         ),
       ),
       body: _buildBodyPageScreen(),
+      resizeToAvoidBottomInset: false,
     );
   }
 
@@ -88,14 +74,14 @@ class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
 
   Widget _buildCategoryNameFiled() {
     return Container(
-      margin: EdgeInsets.only(left: 24),
+      margin: const EdgeInsets.only(left: 24),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildFieldTitle('Category name :'),
           Container(
-            margin: EdgeInsets.only(top: 10),
+            margin: const EdgeInsets.only(top: 10),
             child: TextFormField(
               controller: _nameCategoryTextController,
               style: const TextStyle(
@@ -110,8 +96,8 @@ class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
                       fontFamily: 'Lato'),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4),
-                      borderSide:
-                          BorderSide(width: 1, color: Color(0xFF979797)))),
+                      borderSide: const BorderSide(
+                          width: 1, color: Color(0xFF979797)))),
               autofocus: false,
             ),
           ),
@@ -169,13 +155,13 @@ class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
         children: [
           _buildFieldTitle('Category color :'),
           Container(
-            margin: EdgeInsets.only(top: 10),
+            margin: const EdgeInsets.only(top: 10),
             child: GestureDetector(
               onTap: _onChooseCategoryBackgroundColor,
               child: Container(
                 width: 36,
                 height: 36,
-                margin: EdgeInsets.only(right: 12),
+                margin: const EdgeInsets.only(right: 12),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(18),
                     color: _backgroundColorSelected),
@@ -196,13 +182,13 @@ class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
         children: [
           _buildFieldTitle('Category icon & text color :'),
           Container(
-            margin: EdgeInsets.only(top: 10),
+            margin: const EdgeInsets.only(top: 10),
             child: GestureDetector(
               onTap: _onChooseCategoryIconTextColor,
               child: Container(
                 width: 36,
                 height: 36,
-                margin: EdgeInsets.only(right: 12),
+                margin: const EdgeInsets.only(right: 12),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(18),
                     color: _iconColorSelected),
@@ -268,10 +254,10 @@ class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
       child: Row(
         children: [
           Container(
-            margin: EdgeInsets.only(left: 30),
+            margin: const EdgeInsets.only(left: 30),
             child: TextButton(
                 onPressed: () {
-                  // todo
+                  Navigator.pop(context);
                 },
                 child: const Text(
                   'Cancel',
@@ -298,7 +284,7 @@ class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
                         borderRadius: BorderRadius.circular(4))),
                 child: Text(
                   isEdit ? 'Done' : 'Create Category',
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 16, fontFamily: 'Lato', color: Colors.white),
                 )),
           )
@@ -401,7 +387,7 @@ class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text('OK'))
+                  child: const Text('OK'))
             ],
           );
         });

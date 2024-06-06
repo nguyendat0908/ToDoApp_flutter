@@ -81,7 +81,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3, childAspectRatio: 0.7),
       itemBuilder: (context, index) {
         final isLastItem = index == categoryListDataSource.length;
@@ -129,10 +129,10 @@ class _CategoryListPageState extends State<CategoryListPage> {
                 : null,
           ),
           Container(
-            margin: EdgeInsets.only(top: 10),
+            margin: const EdgeInsets.only(top: 10),
             child: Text(
               category.name,
-              style: TextStyle(fontSize: 14, color: Colors.white),
+              style: const TextStyle(fontSize: 14, color: Colors.white),
             ),
           ),
         ],
@@ -158,7 +158,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
               borderRadius: BorderRadius.circular(8),
               color: Color(0xFF80FFD1),
             ),
-            child: Icon(
+            child: const Icon(
               Icons.add,
               color: Color(0xFF00A369),
               size: 20,
@@ -166,7 +166,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
           ),
           Container(
             margin: EdgeInsets.only(top: 10),
-            child: Text(
+            child: const Text(
               'Create New',
               style: TextStyle(fontSize: 14, color: Colors.white),
             ),
@@ -182,9 +182,11 @@ class _CategoryListPageState extends State<CategoryListPage> {
       child: Row(
         children: [
           TextButton(
-              onPressed: () {},
-              child: Text(
-                'CANCEL',
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text(
+                'Cancel',
                 style: TextStyle(
                     fontSize: 16, fontFamily: 'Lato', color: Color(0xFF8687E7)),
               )),

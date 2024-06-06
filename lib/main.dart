@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/date_symbol_data_local.dart'; // Add this import
 import 'package:todo_app/app/app_cubit.dart';
 import 'package:todo_app/domains/authentication_repository.dart';
 import 'package:todo_app/domains/data_sources/firebase_auth_service.dart';
@@ -15,10 +16,11 @@ import 'firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-  runApp(const App());
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await initializeDateFormatting('vi', null); // Initialize date formatting here
+  runApp(const App());
 }
 
 class App extends StatefulWidget {
@@ -34,7 +36,6 @@ class _AppState extends State<App> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _firebaseAuthService = FirebaseAuthService();
     _authenticationRepository =
@@ -81,21 +82,18 @@ class _MyAppState extends State<MyApp> {
           listener: (context, state) {
             switch (state.status) {
               case AuthenticationStatus.authenticated:
-                // Di den man home
                 _navigatorKey.currentState!.pushAndRemoveUntil(
                   MaterialPageRoute(builder: (context) => const MainPage()),
                   (route) => false,
                 );
                 break;
               case AuthenticationStatus.unauthenticated:
-                // Di den man login
                 _navigatorKey.currentState!.pushAndRemoveUntil(
                   MaterialPageRoute(builder: (context) => const LoginPage()),
                   (route) => false,
                 );
                 break;
               case AuthenticationStatus.unknown:
-                // Khong lam gi ca
                 break;
             }
           },

@@ -34,19 +34,22 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
 
   Widget _buildBodyPage() {
     return Form(
+      child: SingleChildScrollView(
         child: Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        _buildTaskNameField(),
-        _buildTaskDescField(),
-        if (_taskDateTimeSelected != null) _buildTaskDateTime(),
-        if (_categorySelected != null) _buildTaskCategory(),
-        if (_taskPrioritySelected != null) _buildTaskPriority(),
-        _buildTaskActionField(),
-      ],
-    ));
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _buildTaskNameField(),
+            _buildTaskDescField(),
+            if (_taskDateTimeSelected != null) _buildTaskDateTime(),
+            if (_categorySelected != null) _buildTaskCategory(),
+            if (_taskPrioritySelected != null) _buildTaskPriority(),
+            _buildTaskActionField(),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _buildTaskNameField() {
@@ -203,7 +206,8 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
           Container(
             margin: const EdgeInsets.only(left: 10, top: 2),
             child: Text(
-              DateFormat('dd-MM-yyyy HH:mm').format(_taskDateTimeSelected!),
+              DateFormat('dd-MM-yyyy HH:mm', 'vi')
+                  .format(_taskDateTimeSelected!),
               style: const TextStyle(
                   fontSize: 16, fontFamily: 'Lato', color: Color(0xFFAFAFAF)),
             ),

@@ -80,7 +80,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
   Widget _buildGridCategoryList() {
     return GridView.builder(
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+      physics: const ScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3, childAspectRatio: 0.7),
       itemBuilder: (context, index) {

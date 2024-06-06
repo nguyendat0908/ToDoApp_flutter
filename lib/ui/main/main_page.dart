@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/ui/index/index_page.dart';
 import 'package:todo_app/ui/profile/profile_page.dart';
 import 'package:todo_app/ui/task/create_task_page.dart';
 
@@ -19,7 +20,7 @@ class _MainPageState extends State<MainPage> {
     super.initState();
     _page = [
       Container(
-        color: Colors.red,
+        child: const IndexPage(),
       ),
       Container(
         color: Colors.yellow,
@@ -31,7 +32,7 @@ class _MainPageState extends State<MainPage> {
         color: Colors.blue,
       ),
       Container(
-        child: SafeArea(
+        child: const SafeArea(
           child: ProfilePage(),
         ),
       ),

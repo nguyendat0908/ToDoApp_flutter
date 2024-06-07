@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_app/firestore/todo_firestore.dart';
@@ -19,7 +20,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
   final _nameTaskTextController = TextEditingController();
   final _descTaskTextController = TextEditingController();
   CategoryModel? _categorySelected;
-  DateTime? _taskDateTimeSelected;
+  Timestamp? _taskDateTimeSelected;
   int? _taskPrioritySelected;
   @override
   Widget build(BuildContext context) {
@@ -209,7 +210,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
             margin: const EdgeInsets.only(left: 10, top: 2),
             child: Text(
               DateFormat('dd-MM-yyyy HH:mm', 'vi')
-                  .format(_taskDateTimeSelected!),
+                  .format(_taskDateTimeSelected!.toDate()),
               style: const TextStyle(
                   fontSize: 16, fontFamily: 'Lato', color: Color(0xFFAFAFAF)),
             ),
@@ -404,7 +405,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
     final dateTimeSelected =
         date.copyWith(hour: time.hour, minute: time.minute, second: 0);
     setState(() {
-      _taskDateTimeSelected = dateTimeSelected;
+      _taskDateTimeSelected = Timestamp.fromDate(dateTimeSelected);
     });
   }
 
@@ -419,7 +420,8 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
           title: _nameTaskTextController.text,
           description: _descTaskTextController.text,
           priority: _taskPrioritySelected,
-          dateTime: _taskDateTimeSelected);
+          dateTime: _taskDateTimeSelected,
+          isDone: false);
       await todoFirestore.addTodo(todoModels);
       _nameTaskTextController.text = '';
       _descTaskTextController.text = '';

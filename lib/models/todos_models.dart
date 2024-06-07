@@ -1,10 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class TodoModels {
   String? title;
   String? description;
   int? priority;
-  DateTime? dateTime;
+  Timestamp? dateTime;
+  bool? isDone;
 
-  TodoModels({this.title, this.description, this.priority, this.dateTime});
+  TodoModels(
+      {this.title,
+      this.description,
+      this.priority,
+      this.dateTime,
+      this.isDone});
 
   // Chuyen doi doi tuong to do thanh map dang Key - Value
   Map<String, dynamic> toMap() {
@@ -12,7 +20,8 @@ class TodoModels {
       'title': title,
       'description': description,
       'priority': priority,
-      'dateTime': dateTime
+      'dateTime': dateTime,
+      'isDone': isDone
     };
   }
 
@@ -23,6 +32,7 @@ class TodoModels {
       description: map['description'],
       priority: map['priority'],
       dateTime: map['dateTime'],
+      isDone: map['isDone'],
     );
   }
 }

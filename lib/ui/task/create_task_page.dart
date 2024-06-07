@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:todo_app/firestore/todo_firestore.dart';
 import 'package:todo_app/models/category_models.dart';
+import 'package:todo_app/models/todos_models.dart';
 
 import '../../ultils/ultils.enums/color_extention.dart';
 import '../category/category_list_page.dart';
@@ -295,7 +297,9 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
           ),
           const Spacer(),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              _sendDataToFirestore();
+            },
             icon: Image.asset(
               'assets/images/task_send.png',
               width: 24,
@@ -402,5 +406,50 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
     setState(() {
       _taskDateTimeSelected = dateTimeSelected;
     });
+  }
+
+  Future<void> _sendDataToFirestore() async {
+    TodoFirestore todoFirestore = TodoFirestore();
+    try {
+      if (_nameTaskTextController.text.isEmpty ||
+          _descTaskTextController.text.isEmpty) {
+        return;
+      }
+      final todoModels = TodoModels(
+          title: _nameTaskTextController.text,
+          description: _descTaskTextController.text,
+          priority: _taskPrioritySelected,
+          dateTime: _taskDateTimeSelected);
+      await todoFirestore.addTodo(todoModels);
+      _nameTaskTextController.text = '';
+      _descTaskTextController.text = '';
+      _taskPrioritySelected = null;
+      _taskDateTimeSelected = null;
+      _categorySelected = null;
+      setState(() {
+        _showAlert('Successfully', 'Added Task!');
+      });
+    } catch (e) {
+      print(e);
+      _showAlert('Fail', 'No Add');
+    }
+  }
+
+  Future<void> _showAlert(String title, String message) async {
+    await showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(title),
+            content: Text(message),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('OK'))
+            ],
+          );
+        });
   }
 }

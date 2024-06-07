@@ -23,13 +23,19 @@ class _MainPageState extends State<MainPage> {
         child: const IndexPage(),
       ),
       Container(
-        color: Colors.yellow,
+        color: Colors.transparent,
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
       ),
       Container(
         color: Colors.green,
       ),
       Container(
-        color: Colors.blue,
+        color: Colors.transparent,
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
       ),
       Container(
         child: const SafeArea(

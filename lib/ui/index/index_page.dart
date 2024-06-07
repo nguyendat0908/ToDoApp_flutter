@@ -31,7 +31,6 @@ class _IndexPageState extends State<IndexPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildHeadIndex(),
-            _buildTodoBox(),
             StreamBuilder<List<TodoModels>>(
               stream: todoFirestore.getDataTodo(),
               builder: (context, snapshot) {
@@ -40,20 +39,16 @@ class _IndexPageState extends State<IndexPage> {
                     child: Text(
                       '${snapshot.error}',
                       style: TextStyle(
-                          fontSize: 30,
+                          fontSize: 20,
                           fontFamily: 'Lato',
                           color: Colors.white.withOpacity(0.87)),
                     ),
                   );
                 } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Center(
-                    child: Text(
-                      'No todo!',
-                      style: TextStyle(
-                          fontSize: 30,
-                          fontFamily: 'Lato',
-                          color: Colors.white.withOpacity(0.87)),
-                    ),
+                  return Container(
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.symmetric(vertical: 60),
+                    child: _buildNoTodo(),
                   );
                 } else {
                   List<TodoModels> allTodos = snapshot.data!;
@@ -67,6 +62,7 @@ class _IndexPageState extends State<IndexPage> {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      _buildTodoBox(),
                       _buildListTodo(
                           remainingTodos), // Hiển thị danh sách công việc chưa hoàn thành
                       _buildCompletedBox(), // Hiển thị box cho các công việc đã hoàn thành
@@ -292,6 +288,35 @@ class _IndexPageState extends State<IndexPage> {
           ],
         );
       },
+    );
+  }
+
+  Widget _buildNoTodo() {
+    return Column(
+      children: [
+        Image.asset(
+          'assets/images/No_Todo.png',
+          height: 227,
+          width: 227,
+        ),
+        Text(
+          'What do you want to do today?',
+          style: TextStyle(
+              fontSize: 20,
+              fontFamily: 'Lato',
+              color: Colors.white.withOpacity(0.87)),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Text(
+          'Tap + to add your tasks',
+          style: TextStyle(
+              fontSize: 16,
+              fontFamily: 'Lato',
+              color: Colors.white.withOpacity(0.87)),
+        ),
+      ],
     );
   }
 }

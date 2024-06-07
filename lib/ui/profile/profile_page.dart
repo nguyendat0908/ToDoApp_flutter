@@ -20,9 +20,7 @@ class _ProfilePageState extends State<ProfilePage> {
         children: [
           Image.asset("assets/images/logout.png"),
           TextButton(
-            onPressed: () {
-              FirebaseAuth.instance.signOut();
-            },
+            onPressed: _showLogoutConfirmationDialog,
             child: const Text(
               'Logout',
               style: TextStyle(
@@ -33,6 +31,32 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ],
       ),
+    );
+  }
+
+  void _showLogoutConfirmationDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirm Logout'),
+          content: const Text('Are you sure you want to log out?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                FirebaseAuth.instance.signOut();
+              },
+              child: const Text('Yes'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

@@ -6,25 +6,24 @@ class TodoFirestore {
 
   // Them du lieu len firestore
   Future<void> addTodo(TodoModels todoModels) async {
-    await _db.collection('todos').add(todoModels.toMap());
+    DocumentReference docRef =
+        await _db.collection('todos').add(todoModels.toMap());
+    todoModels.id = docRef.id; // Lưu lại id của tài liệu vừa được thêm
   }
 
   // Update du lieu
   Future<void> updateTodo(TodoModels todoModels) async {
-    await _db
-        .collection('todos')
-        .doc(todoModels.priority as String?)
-        .update(todoModels.toMap());
+    await _db.collection('todos').doc(todoModels.id).update(todoModels.toMap());
   }
 
   // Xoa du lieu
-  Future<void> deleteTodo(TodoModels todoModels) async {
-    await _db.collection('todos').doc(todoModels.priority as String?).delete();
+  Future<void> deleteTodo(String id) async {
+    await _db.collection('todos').doc(id).delete();
   }
 
   // Lay du lieu tu firestore
   Stream<List<TodoModels>> getDataTodo() {
     return _db.collection('todos').snapshots().map((snapshot) =>
-        snapshot.docs.map((e) => TodoModels.fromMap(e.data())).toList());
+        snapshot.docs.map((e) => TodoModels.fromMap(e.data(), e.id)).toList());
   }
 }

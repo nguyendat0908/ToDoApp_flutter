@@ -417,11 +417,11 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
         return;
       }
       final todoModels = TodoModels(
-          title: _nameTaskTextController.text,
-          description: _descTaskTextController.text,
-          priority: _taskPrioritySelected,
-          dateTime: _taskDateTimeSelected,
-          isDone: false);
+        title: _nameTaskTextController.text,
+        description: _descTaskTextController.text,
+        priority: _taskPrioritySelected,
+        dateTime: _taskDateTimeSelected,
+      );
       await todoFirestore.addTodo(todoModels);
       _nameTaskTextController.text = '';
       _descTaskTextController.text = '';

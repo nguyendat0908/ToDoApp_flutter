@@ -12,7 +12,6 @@ class IndexPage extends StatefulWidget {
 
 class _IndexPageState extends State<IndexPage> {
   final TodoFirestore todoFirestore = TodoFirestore();
-  bool _isChecked = false;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -57,12 +56,27 @@ class _IndexPageState extends State<IndexPage> {
                     ),
                   );
                 } else {
-                  return _buildListTodo(snapshot.data!);
+                  List<TodoModels> allTodos = snapshot.data!;
+                  List<TodoModels> completedTodos = allTodos
+                      .where((todo) => todo.isDone)
+                      .toList(); // Lọc danh sách công việc đã hoàn thành
+                  List<TodoModels> remainingTodos = allTodos
+                      .where((todo) => !todo.isDone)
+                      .toList(); // Lọc danh sách công việc chưa hoàn thành
+
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildListTodo(
+                          remainingTodos), // Hiển thị danh sách công việc chưa hoàn thành
+                      _buildCompletedBox(), // Hiển thị box cho các công việc đã hoàn thành
+                      _buildListTodo(
+                          completedTodos), // Hiển thị danh sách công việc đã hoàn thành
+                    ],
+                  );
                 }
               },
             ),
-            _buildCompletedBox(),
-            _buildListTodoCompleted(),
           ],
         ),
       ),
@@ -130,30 +144,39 @@ class _IndexPageState extends State<IndexPage> {
   }
 
   Widget _buildListItems(TodoModels todoModels) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      width: 327,
-      height: 72,
-      decoration: BoxDecoration(
-        color: Color(0xFF363636),
-        borderRadius: BorderRadius.circular(4),
-      ),
-      child: Row(
-        children: [
-          Checkbox(
-            value: _isChecked,
-            onChanged: (val) {
-              setState(() {
-                _isChecked = val!;
-              });
-            },
-            activeColor: Colors.white,
-            checkColor: Colors.green,
-          ),
-          _buildDescAndTitle(todoModels),
-          Expanded(child: Container()),
-          _buildTimeAndPriority(todoModels),
-        ],
+    return GestureDetector(
+      onLongPress: () {
+        // Hiển thị hộp thoại xác nhận xóa
+        _showDeleteConfirmationDialog(todoModels);
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 10),
+        width: 327,
+        height: 72,
+        decoration: BoxDecoration(
+          color: Color(0xFF363636),
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Row(
+          children: [
+            Checkbox(
+              value: todoModels.isDone,
+              onChanged: (val) {
+                setState(() {
+                  todoModels.isDone = val!;
+                  if (val) {
+                    todoFirestore.updateTodo(todoModels);
+                  }
+                });
+              },
+              activeColor: Colors.white,
+              checkColor: Colors.green,
+            ),
+            _buildDescAndTitle(todoModels),
+            Expanded(child: Container()),
+            _buildTimeAndPriority(todoModels),
+          ],
+        ),
       ),
     );
   }
@@ -175,46 +198,6 @@ class _IndexPageState extends State<IndexPage> {
           color: Colors.white.withOpacity(0.21),
           borderRadius: BorderRadius.circular(6)),
     );
-  }
-
-  Widget _buildListTodoCompleted() {
-    return Container();
-    // return ListView.builder(
-    //   shrinkWrap: true,
-    //   itemBuilder: (context, index) {
-    //     return _buildListItemsCompleted();
-    //   },
-    //   itemCount: 1,
-    // );
-  }
-
-  Widget _buildListItemsCompleted() {
-    return Container(
-        // margin: EdgeInsets.symmetric(vertical: 10),
-        // width: 327,
-        // height: 72,
-        // decoration: BoxDecoration(
-        //   color: Color(0xFF363636),
-        //   borderRadius: BorderRadius.circular(4),
-        // ),
-        // child: Row(
-        //   children: [
-        //     Checkbox(
-        //       value: _isChecked,
-        //       onChanged: (val) {
-        //         setState(() {
-        //           _isChecked = val!;
-        //         });
-        //       },
-        //       activeColor: Colors.white,
-        //       checkColor: Colors.green,
-        //     ),
-        //     _buildDescAndTitle(),
-        //     Expanded(child: Container()),
-        //     _buildTimeAndPriority(),
-        //   ],
-        // ),
-        );
   }
 
   Widget _buildDescAndTitle(TodoModels todoModels) {
@@ -280,6 +263,35 @@ class _IndexPageState extends State<IndexPage> {
           ),
         ],
       ),
+    );
+  }
+
+  // Phương thức để hiển thị hộp thoại xác nhận xóa
+  void _showDeleteConfirmationDialog(TodoModels todoModels) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Confirm Delete"),
+          content: Text("Are you sure you want to delete this task?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                todoFirestore.deleteTodo(todoModels
+                    .id!); // Gọi phương thức xóa công việc từ Firestore
+              },
+              child: Text("Delete"),
+            ),
+          ],
+        );
+      },
     );
   }
 }

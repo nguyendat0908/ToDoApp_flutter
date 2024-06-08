@@ -78,7 +78,8 @@ class _OnBoardingPageViewState extends State<OnBoardingPageView> {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => WelcomePage(isFirstTimeInstallApp: true)));
+            builder: (context) =>
+                const WelcomePage(isFirstTimeInstallApp: true)));
   }
 
   Future<void> _markOnboardingCompleted() async {

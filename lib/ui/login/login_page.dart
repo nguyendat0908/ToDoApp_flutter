@@ -80,9 +80,9 @@ class _LoginViewState extends State<LoginView> {
 
   Widget _buildPageTitle() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20).copyWith(top: 40),
+      margin: const EdgeInsets.symmetric(horizontal: 20).copyWith(top: 40),
       child: Text(
-        'Login',
+        'Đăng nhập',
         style: TextStyle(
             color: Colors.white.withOpacity(0.87),
             fontSize: 32,
@@ -98,7 +98,7 @@ class _LoginViewState extends State<LoginView> {
         key: _formKey,
         autovalidateMode: _autoVaildateMode,
         child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 24),
+          margin: const EdgeInsets.symmetric(horizontal: 24),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,7 +120,7 @@ class _LoginViewState extends State<LoginView> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Username',
+          'Tên người dùng',
           style: TextStyle(
               color: Colors.white.withOpacity(0.87),
               fontSize: 16,
@@ -131,8 +131,8 @@ class _LoginViewState extends State<LoginView> {
           child: TextFormField(
             controller: _emailTextController,
             decoration: InputDecoration(
-                hintText: "Enter your Username",
-                hintStyle: TextStyle(
+                hintText: "Nhập tên người dùng của bạn",
+                hintStyle: const TextStyle(
                     color: Color(0xFF535353), fontSize: 16, fontFamily: 'Lato'),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4),
@@ -141,7 +141,7 @@ class _LoginViewState extends State<LoginView> {
                 filled: true),
             validator: (String? value) {
               if (value == null || value.isEmpty) {
-                return "Email is required"; // Yêu cầu nhập email
+                return "Bắt buộc phải nhập Email!"; // Yêu cầu nhập email
               }
               final bool emailValid = RegExp(
                       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
@@ -150,7 +150,7 @@ class _LoginViewState extends State<LoginView> {
               if (emailValid) {
                 return null;
               } else {
-                return "Invalid email!";
+                return "Email không hợp lệ!";
               }
             },
             style: TextStyle(
@@ -169,7 +169,7 @@ class _LoginViewState extends State<LoginView> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Password',
+          'Mật khẩu',
           style: TextStyle(
               color: Colors.white.withOpacity(0.87),
               fontSize: 16,
@@ -181,7 +181,7 @@ class _LoginViewState extends State<LoginView> {
             controller: _passwordController,
             decoration: InputDecoration(
                 hintText: "* * * * * * * * * * * *",
-                hintStyle: TextStyle(
+                hintStyle: const TextStyle(
                     color: Color(0xFF535353), fontSize: 16, fontFamily: 'Lato'),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4),
@@ -190,10 +190,10 @@ class _LoginViewState extends State<LoginView> {
                 filled: true),
             validator: (String? value) {
               if (value == null || value.isEmpty) {
-                return "Password is required";
+                return "Bắt buộc phải nhập mật khẩu";
               }
               if (value.length < 6) {
-                return "Password must have 6 digits";
+                return "Mật khẩu phải có 6 chữ số";
               }
               return null;
             },
@@ -212,7 +212,7 @@ class _LoginViewState extends State<LoginView> {
     return Container(
       width: double.infinity,
       height: 48,
-      margin: EdgeInsets.only(top: 70),
+      margin: const EdgeInsets.only(top: 70),
       child: ElevatedButton(
           onPressed: _onHandleLoginSubmit, // Muốn disabled thì để null
           style: ElevatedButton.styleFrom(
@@ -220,8 +220,8 @@ class _LoginViewState extends State<LoginView> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(4)),
               disabledBackgroundColor: Color(0xFF8687E7).withOpacity(0.5)),
-          child: Text(
-            'Login',
+          child: const Text(
+            'Đăng nhập',
             style: TextStyle(
                 fontSize: 16, fontFamily: 'Lato', color: Colors.white),
           )),
@@ -230,8 +230,8 @@ class _LoginViewState extends State<LoginView> {
 
   Widget _buildOrSplitDivider() {
     return Container(
-      margin: EdgeInsets.only(top: 45, bottom: 40),
-      padding: EdgeInsets.symmetric(horizontal: 24),
+      margin: const EdgeInsets.only(top: 45, bottom: 40),
+      padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Row(
         children: [
           Expanded(
@@ -242,7 +242,7 @@ class _LoginViewState extends State<LoginView> {
             ),
           ),
           const Text(
-            'OR',
+            'HOẶC',
             style: TextStyle(
                 fontSize: 16, fontFamily: 'Lato', color: Color(0xFF979797)),
           ),
@@ -293,9 +293,9 @@ class _LoginViewState extends State<LoginView> {
                 fit: BoxFit.fill,
               ),
               Container(
-                margin: EdgeInsets.only(left: 10),
+                margin: const EdgeInsets.only(left: 10),
                 child: Text(
-                  'Login with Google',
+                  'Đăng nhập với tài khoản Google',
                   style: TextStyle(
                       fontSize: 16,
                       fontFamily: 'Lato',
@@ -336,9 +336,9 @@ class _LoginViewState extends State<LoginView> {
                 fit: BoxFit.fill,
               ),
               Container(
-                margin: EdgeInsets.only(left: 10),
+                margin: const EdgeInsets.only(left: 10),
                 child: Text(
-                  'Login with Apple',
+                  'Đăng nhập với tài khoản Apple',
                   style: TextStyle(
                       fontSize: 16,
                       fontFamily: 'Lato',
@@ -352,19 +352,19 @@ class _LoginViewState extends State<LoginView> {
 
   Widget _buildHaveNotAccount(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 46, bottom: 20),
+      margin: const EdgeInsets.only(top: 46, bottom: 20),
       alignment: Alignment.center,
       child: RichText(
         text: TextSpan(
-            text: 'Don’t have an account?',
-            style: TextStyle(
+            text: 'Bạn chưa có tài khoản?',
+            style: const TextStyle(
               fontSize: 12,
               fontFamily: 'Lato',
               color: Color(0xFF979797),
             ),
             children: [
               TextSpan(
-                  text: ' Register',
+                  text: ' Đăng ký',
                   style: TextStyle(
                     fontSize: 12,
                     fontFamily: 'Lato',
@@ -381,7 +381,7 @@ class _LoginViewState extends State<LoginView> {
 
   void _gotoRegisterPage(BuildContext context) {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => RegisterPage()));
+        context, MaterialPageRoute(builder: (context) => const RegisterPage()));
   }
 
   void _onHandleLoginSubmit() {

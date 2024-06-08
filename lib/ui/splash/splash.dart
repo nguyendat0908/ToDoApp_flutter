@@ -17,13 +17,14 @@ class SplashScreen extends StatelessWidget {
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-              builder: (context) => WelcomePage(isFirstTimeInstallApp: false)));
+              builder: (context) =>
+                  const WelcomePage(isFirstTimeInstallApp: false)));
     } else {
       if (!context.mounted) {
         return;
       }
       Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => OnBoardingPageView()));
+          MaterialPageRoute(builder: (context) => const OnBoardingPageView()));
     }
   }
 
@@ -39,7 +40,9 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _checkAppState(context);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _checkAppState(context);
+    });
     return Scaffold(
       backgroundColor: const Color(0xFF121212),
       body: SafeArea(

@@ -39,7 +39,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(4),
-          color: Color(0xFF363636),
+          color: const Color(0xFF363636),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
@@ -63,7 +63,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
     return Column(
       children: [
         Text(
-          'Choose Category',
+          'Chọn danh mục',
           style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -167,7 +167,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
           Container(
             margin: EdgeInsets.only(top: 10),
             child: const Text(
-              'Create New',
+              'Tạo mới',
               style: TextStyle(fontSize: 14, color: Colors.white),
             ),
           ),
@@ -186,7 +186,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
                 Navigator.pop(context);
               },
               child: const Text(
-                'Cancel',
+                'Hủy bỏ',
                 style: TextStyle(
                     fontSize: 16, fontFamily: 'Lato', color: Color(0xFF8687E7)),
               )),
@@ -203,7 +203,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(4))),
                 child: Text(
-                  _isEditMode ? "Cancel Edit" : "Edit Category",
+                  _isEditMode ? "Hủy chỉnh sửa" : "Chỉnh sửa",
                   style: const TextStyle(
                       fontSize: 16, fontFamily: 'Lato', color: Colors.white),
                 )),

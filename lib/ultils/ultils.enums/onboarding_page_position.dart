@@ -16,22 +16,22 @@ extension OnboardingPagePositionExtension on OnboardingPagePosition {
   String onboardingPageTitle() {
     switch (this) {
       case OnboardingPagePosition.page1:
-        return "Manage your tasks";
+        return "Quản lý nhiệm vụ";
       case OnboardingPagePosition.page2:
-        return "Create daily routine";
+        return "Tạo thói quen";
       case OnboardingPagePosition.page3:
-        return "Orgonaize your tasks";
+        return "Tổ chức các nhiệm vụ";
     }
   }
 
   String onboardingPageContent() {
     switch (this) {
       case OnboardingPagePosition.page1:
-        return "You can easily manage all of your daily tasks in DoMe for free";
+        return "Bạn có thể dễ dàng quản lý tất cả công việc hàng ngày của mình trong ứng dụng";
       case OnboardingPagePosition.page2:
-        return "In Uptodo  you can create your personalized routine to stay productive";
+        return "Trong ứng dụng, bạn có thể tạo thói quen cá nhân hóa của mình để duy trì hiệu quả";
       case OnboardingPagePosition.page3:
-        return "You can organize your daily tasks by adding your tasks into separate categories";
+        return "Bạn có thể sắp xếp công việc của mình bằng cách thêm công việc vào các danh mục riêng";
     }
   }
 }

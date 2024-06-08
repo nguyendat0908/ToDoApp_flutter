@@ -35,7 +35,7 @@ class _TaskPriorityListPageState extends State<TaskPriorityListPage> {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(4),
-          color: Color(0xFF363636),
+          color: const Color(0xFF363636),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
@@ -59,7 +59,7 @@ class _TaskPriorityListPageState extends State<TaskPriorityListPage> {
     return Column(
       children: [
         Text(
-          'Task Priority',
+          'Ưu tiên nhiệm vụ',
           style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -133,7 +133,7 @@ class _TaskPriorityListPageState extends State<TaskPriorityListPage> {
                 Navigator.pop(context);
               },
               child: const Text(
-                'Cancel',
+                'Hủy bỏ',
                 style: TextStyle(
                     fontSize: 16, fontFamily: 'Lato', color: Color(0xFF8687E7)),
               )),
@@ -150,7 +150,7 @@ class _TaskPriorityListPageState extends State<TaskPriorityListPage> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(4))),
                 child: const Text(
-                  "Save",
+                  "Lưu",
                   style: TextStyle(
                       fontSize: 16, fontFamily: 'Lato', color: Colors.white),
                 )),

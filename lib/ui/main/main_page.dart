@@ -24,7 +24,7 @@ class _MainPageState extends State<MainPage> {
       ),
       Container(
         color: Colors.transparent,
-        child: Center(
+        child: const Center(
           child: CircularProgressIndicator(),
         ),
       ),
@@ -33,7 +33,7 @@ class _MainPageState extends State<MainPage> {
       ),
       Container(
         color: Colors.transparent,
-        child: Center(
+        child: const Center(
           child: CircularProgressIndicator(),
         ),
       ),
@@ -80,7 +80,7 @@ class _MainPageState extends State<MainPage> {
               fit: BoxFit.fill,
               color: const Color(0xFF8687E7),
             ),
-            label: 'Index',
+            label: 'Mục lục',
             backgroundColor: Colors.transparent,
           ),
           BottomNavigationBarItem(
@@ -97,7 +97,7 @@ class _MainPageState extends State<MainPage> {
               fit: BoxFit.fill,
               color: const Color(0xFF8687E7),
             ),
-            label: 'Calendar',
+            label: 'Lịch',
             backgroundColor: Colors.transparent,
           ),
           BottomNavigationBarItem(
@@ -119,7 +119,7 @@ class _MainPageState extends State<MainPage> {
               fit: BoxFit.fill,
               color: const Color(0xFF8687E7),
             ),
-            label: 'Focuse',
+            label: 'Tập trung',
             backgroundColor: Colors.transparent,
           ),
           BottomNavigationBarItem(
@@ -136,7 +136,7 @@ class _MainPageState extends State<MainPage> {
               fit: BoxFit.fill,
               color: const Color(0xFF8687E7),
             ),
-            label: 'Profile',
+            label: 'Cá nhân',
             backgroundColor: Colors.transparent,
           )
         ],

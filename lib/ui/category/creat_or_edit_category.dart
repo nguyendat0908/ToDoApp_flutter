@@ -43,7 +43,7 @@ class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         title: Text(
-          isEdit ? 'Edit category' : 'Create new category',
+          isEdit ? 'Chỉnh sửa' : 'Tạo mới danh mục',
           style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -79,7 +79,7 @@ class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildFieldTitle('Category name :'),
+          _buildFieldTitle('Tên danh mục :'),
           Container(
             margin: const EdgeInsets.only(top: 10),
             child: TextFormField(
@@ -89,7 +89,7 @@ class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
                 color: Color(0xFFFFFFFF),
               ),
               decoration: InputDecoration(
-                  hintText: 'Category name',
+                  hintText: 'Tên danh mục',
                   hintStyle: const TextStyle(
                       fontSize: 16,
                       color: Color(0xFFAFAFAF),
@@ -113,7 +113,7 @@ class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildFieldTitle('Category icon :'),
+          _buildFieldTitle('Biểu tượng danh mục :'),
           GestureDetector(
             onTap: _chooseIcon,
             child: Container(
@@ -132,7 +132,7 @@ class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
                         size: 26,
                       )
                     : Text(
-                        'Choose icon from library',
+                        'Chọn biểu tượng từ thư viện',
                         style: TextStyle(
                             fontSize: 12,
                             color: Colors.white.withOpacity(0.87),
@@ -153,7 +153,7 @@ class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildFieldTitle('Category color :'),
+          _buildFieldTitle('Màu danh mục :'),
           Container(
             margin: const EdgeInsets.only(top: 10),
             child: GestureDetector(
@@ -180,7 +180,7 @@ class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildFieldTitle('Category icon & text color :'),
+          _buildFieldTitle('Biểu tượng danh mục và màu văn bản :'),
           Container(
             margin: const EdgeInsets.only(top: 10),
             child: GestureDetector(
@@ -208,7 +208,7 @@ class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildFieldTitle('Category icon & text color'),
+          _buildFieldTitle('Biểu tượng danh mục và màu văn bản :'),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -260,7 +260,7 @@ class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
                   Navigator.pop(context);
                 },
                 child: const Text(
-                  'Cancel',
+                  'Hủy bỏ',
                   style: TextStyle(
                       fontSize: 16,
                       fontFamily: 'Lato',
@@ -283,7 +283,7 @@ class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(4))),
                 child: Text(
-                  isEdit ? 'Done' : 'Create Category',
+                  isEdit ? 'Xong' : 'Tạo danh mục',
                   style: const TextStyle(
                       fontSize: 16, fontFamily: 'Lato', color: Colors.white),
                 )),
@@ -320,10 +320,10 @@ class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
       _iconSelected = null;
       setState(() {});
       // Show alert len man hinh nguoi dung
-      _showAlert('Successfully', 'Create category!');
+      _showAlert('Thành công', 'Tạo danh mục!');
     } catch (e) {
       print(e);
-      _showAlert('Fail', 'No create category!');
+      _showAlert('Lỗi', 'Không tạo được danh mục!');
     }
   }
 
@@ -447,13 +447,13 @@ class _CreateOrEditCategoryState extends State<CreateOrEditCategory> {
       _iconSelected = null;
       setState(() {});
       // Show alert len man hinh nguoi dung
-      await _showAlert('Successfully', 'Edit category!');
+      await _showAlert('Thành công', 'Chỉnh sửa danh mục!');
       if (context.mounted) {
         Navigator.pop(context);
       }
     } catch (e) {
       print(e);
-      _showAlert('Fail', 'No edit category!');
+      _showAlert('Lỗi', 'Không sửa được danh mục!');
     }
   }
 }

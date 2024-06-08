@@ -77,7 +77,7 @@ class _RegisterViewState extends State<RegisterView> {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20).copyWith(top: 40),
       child: Text(
-        'Register',
+        'Đăng ký',
         style: TextStyle(
             color: Colors.white.withOpacity(0.87),
             fontSize: 32,
@@ -117,7 +117,7 @@ class _RegisterViewState extends State<RegisterView> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Username',
+          'Tên người dùng',
           style: TextStyle(
               color: Colors.white.withOpacity(0.87),
               fontSize: 16,
@@ -128,7 +128,7 @@ class _RegisterViewState extends State<RegisterView> {
           child: TextFormField(
             controller: _emailTextController,
             decoration: InputDecoration(
-                hintText: "Enter your Username",
+                hintText: "Nhập tên người dùng của bạn",
                 hintStyle: const TextStyle(
                     color: Color(0xFF535353), fontSize: 16, fontFamily: 'Lato'),
                 border: OutlineInputBorder(
@@ -152,7 +152,7 @@ class _RegisterViewState extends State<RegisterView> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Password',
+          'Mật khẩu',
           style: TextStyle(
               color: Colors.white.withOpacity(0.87),
               fontSize: 16,
@@ -188,7 +188,7 @@ class _RegisterViewState extends State<RegisterView> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Confirm Password',
+          'Xác nhận mật khẩu',
           style: TextStyle(
               color: Colors.white.withOpacity(0.87),
               fontSize: 16,
@@ -230,7 +230,7 @@ class _RegisterViewState extends State<RegisterView> {
                   borderRadius: BorderRadius.circular(4)),
               disabledBackgroundColor: Color(0xFF8687E7).withOpacity(0.5)),
           child: const Text(
-            'Register',
+            'Đăng ký',
             style: TextStyle(
                 fontSize: 16, fontFamily: 'Lato', color: Colors.white),
           )),
@@ -304,7 +304,7 @@ class _RegisterViewState extends State<RegisterView> {
               Container(
                 margin: const EdgeInsets.only(left: 10),
                 child: Text(
-                  'Register with Google',
+                  'Đăng ký với Google',
                   style: TextStyle(
                       fontSize: 16,
                       fontFamily: 'Lato',
@@ -347,7 +347,7 @@ class _RegisterViewState extends State<RegisterView> {
               Container(
                 margin: const EdgeInsets.only(left: 10),
                 child: Text(
-                  'Register with Apple',
+                  'Đăng ký với Apple',
                   style: TextStyle(
                       fontSize: 16,
                       fontFamily: 'Lato',
@@ -365,7 +365,7 @@ class _RegisterViewState extends State<RegisterView> {
       alignment: Alignment.center,
       child: RichText(
         text: TextSpan(
-            text: 'Already have an account?',
+            text: 'Bạn có sẵn sàng để tạo một tài khoản?',
             style: const TextStyle(
               fontSize: 12,
               fontFamily: 'Lato',
@@ -373,7 +373,7 @@ class _RegisterViewState extends State<RegisterView> {
             ),
             children: [
               TextSpan(
-                  text: 'Login',
+                  text: 'Đăng nhập',
                   style: TextStyle(
                     fontSize: 12,
                     fontFamily: 'Lato',

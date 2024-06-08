@@ -19,7 +19,7 @@ class OnBoardingChildPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF121212),
+      backgroundColor: const Color(0xFF121212),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -40,12 +40,12 @@ class OnBoardingChildPage extends StatelessWidget {
 
   Widget _buildShipButton() {
     return Container(
-      margin: EdgeInsets.only(top: 14),
+      margin: const EdgeInsets.only(top: 14),
       alignment: AlignmentDirectional.centerStart,
       child: TextButton(
         onPressed: skipOnPresed,
         child: Text(
-          'SKIP',
+          'Bỏ qua',
           style: TextStyle(
               fontSize: 16,
               fontFamily: 'Lato',
@@ -66,7 +66,7 @@ class OnBoardingChildPage extends StatelessWidget {
 
   Widget _buildOnBoardingPageControl() {
     return Container(
-      margin: EdgeInsets.only(top: 35),
+      margin: const EdgeInsets.only(top: 35),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -155,7 +155,7 @@ class OnBoardingChildPage extends StatelessWidget {
                 backOnPressed();
               },
               child: Text(
-                'BACK',
+                'Trở về',
                 style: TextStyle(
                     fontSize: 16,
                     fontFamily: 'Lato',
@@ -174,8 +174,8 @@ class OnBoardingChildPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(4))),
                 child: Text(
                   onboardingPagePosition == OnboardingPagePosition.page3
-                      ? 'GET STARTED'
-                      : 'NEXT',
+                      ? 'Bắt Đầu'
+                      : 'Tiếp',
                   style: const TextStyle(
                       fontSize: 16, fontFamily: 'Lato', color: Colors.white),
                 )),

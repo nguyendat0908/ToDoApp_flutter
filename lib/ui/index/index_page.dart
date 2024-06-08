@@ -24,7 +24,7 @@ class _IndexPageState extends State<IndexPage> {
 
   Widget _buildBodyPage() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 24, vertical: 56),
+      margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 56),
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -47,7 +47,7 @@ class _IndexPageState extends State<IndexPage> {
                 } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                   return Container(
                     alignment: Alignment.center,
-                    margin: EdgeInsets.symmetric(vertical: 60),
+                    margin: const EdgeInsets.symmetric(vertical: 60),
                     child: _buildNoTodo(),
                   );
                 } else {
@@ -90,7 +90,7 @@ class _IndexPageState extends State<IndexPage> {
         ),
         Expanded(child: Container()),
         Text(
-          'Index',
+          'Mục Lục',
           style: TextStyle(
               fontSize: 20,
               fontFamily: 'Lato',
@@ -114,13 +114,13 @@ class _IndexPageState extends State<IndexPage> {
     return Container(
       alignment: Alignment.center,
       child: Text(
-        'Completed',
+        'Hoàn thành',
         style: TextStyle(
             fontSize: 16,
             fontFamily: 'Lato',
             color: Colors.white.withOpacity(0.87)),
       ),
-      margin: EdgeInsets.only(top: 10),
+      margin: const EdgeInsets.only(top: 10),
       height: 40,
       width: 120,
       decoration: BoxDecoration(
@@ -181,7 +181,7 @@ class _IndexPageState extends State<IndexPage> {
     return Container(
       alignment: Alignment.center,
       child: Text(
-        'List Todo',
+        'Danh sách việc cần làm',
         style: TextStyle(
             fontSize: 16,
             fontFamily: 'Lato',
@@ -189,7 +189,7 @@ class _IndexPageState extends State<IndexPage> {
       ),
       margin: EdgeInsets.symmetric(vertical: 10),
       height: 40,
-      width: 120,
+      width: 220,
       decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.21),
           borderRadius: BorderRadius.circular(6)),
@@ -268,14 +268,14 @@ class _IndexPageState extends State<IndexPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Confirm Delete"),
-          content: Text("Are you sure you want to delete this task?"),
+          title: const Text("Xác nhận xóa"),
+          content: const Text("Bạn có chắc chắn muốn xóa tác vụ này không?"),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text("Cancel"),
+              child: const Text("Hủy bỏ"),
             ),
             TextButton(
               onPressed: () {
@@ -283,7 +283,7 @@ class _IndexPageState extends State<IndexPage> {
                 todoFirestore.deleteTodo(todoModels
                     .id!); // Gọi phương thức xóa công việc từ Firestore
               },
-              child: Text("Delete"),
+              child: const Text("Xóa"),
             ),
           ],
         );
@@ -300,7 +300,7 @@ class _IndexPageState extends State<IndexPage> {
           width: 227,
         ),
         Text(
-          'What do you want to do today?',
+          'Bạn muốn làm gì hôm nay?',
           style: TextStyle(
               fontSize: 20,
               fontFamily: 'Lato',
@@ -310,7 +310,7 @@ class _IndexPageState extends State<IndexPage> {
           height: 10,
         ),
         Text(
-          'Tap + to add your tasks',
+          'Nhấn vào + để thêm nhiệm vụ của bạn',
           style: TextStyle(
               fontSize: 16,
               fontFamily: 'Lato',

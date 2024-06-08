@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/ui/register/register_page.dart';
+
+import '../login/login_page.dart';
 
 class WelcomePage extends StatelessWidget {
   final isFirstTimeInstallApp;
@@ -32,8 +35,8 @@ class WelcomePage extends StatelessWidget {
         children: [
           _buildTitleAndDesc(),
           const Spacer(),
-          _buildButtonLogin(),
-          _buildButtonRegister(),
+          _buildButtonLogin(context),
+          _buildButtonRegister(context),
         ],
       ),
     );
@@ -49,10 +52,10 @@ class WelcomePage extends StatelessWidget {
             height: 51,
           ),
           Text(
-            'Welcome to UpTodo',
+            'Chào mừng đến với App',
             style: TextStyle(
                 color: Colors.white.withOpacity(0.87),
-                fontSize: 32,
+                fontSize: 28,
                 fontFamily: 'Lato',
                 fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
@@ -63,7 +66,7 @@ class WelcomePage extends StatelessWidget {
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 20),
             child: Text(
-              'Please login to your account or create new account to continue',
+              'Vui lòng đăng nhập vào tài khoản của bạn hoặc tạo tài khoản mới để tiếp tục',
               style: TextStyle(
                   fontSize: 16,
                   color: Colors.white.withOpacity(0.67),
@@ -76,35 +79,39 @@ class WelcomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildButtonLogin() {
+  Widget _buildButtonLogin(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 24),
       width: double.infinity,
       height: 48,
       child: ElevatedButton(
           onPressed: () {
-            //
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const LoginPage()),
+            );
           },
           style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF8875FF),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(4))),
           child: const Text(
-            'LOGIN',
+            'Đăng nhập',
             style: TextStyle(
                 fontSize: 16, fontFamily: 'Lato', color: Colors.white),
           )),
     );
   }
 
-  Widget _buildButtonRegister() {
+  Widget _buildButtonRegister(BuildContext context) {
     return Container(
       width: double.infinity,
       height: 48,
       margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 28),
       child: ElevatedButton(
           onPressed: () {
-            //
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const RegisterPage()));
           },
           style: OutlinedButton.styleFrom(
               backgroundColor: Colors.transparent,
@@ -116,7 +123,7 @@ class WelcomePage extends StatelessWidget {
                 color: Color(0xFF8875FF),
               )),
           child: const Text(
-            'CREATE ACCOUNT',
+            'Tạo mới tài khoản',
             style: TextStyle(
                 fontSize: 16, fontFamily: 'Lato', color: Colors.white),
           )),

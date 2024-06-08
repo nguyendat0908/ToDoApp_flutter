@@ -28,7 +28,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
       color: const Color(0xFF363636),
       child: SafeArea(
         child: Container(
-          padding: EdgeInsets.all(25),
+          padding: const EdgeInsets.all(25),
           child: _buildBodyPage(),
         ),
       ),
@@ -61,7 +61,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Add Task',
+          'Thêm nhiệm vụ',
           style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -69,7 +69,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
               color: Colors.white.withOpacity(0.87)),
         ),
         Container(
-          margin: EdgeInsets.only(top: 10),
+          margin: const EdgeInsets.only(top: 10),
           child: TextFormField(
             controller: _nameTaskTextController,
             style: const TextStyle(
@@ -77,13 +77,13 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
               color: Color(0xFFFFFFFF),
             ),
             decoration: InputDecoration(
-                hintText: 'Do math homework',
+                hintText: 'Tên việc cần làm',
                 hintStyle: const TextStyle(
                     fontSize: 18, color: Color(0xFFAFAFAF), fontFamily: 'Lato'),
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(4),
                     borderSide:
-                        BorderSide(width: 1, color: Color(0xFF979797)))),
+                        const BorderSide(width: 1, color: Color(0xFF979797)))),
             autofocus: false,
           ),
         ),
@@ -93,13 +93,13 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
 
   Widget _buildTaskDescField() {
     return Container(
-      margin: EdgeInsets.only(top: 15),
+      margin: const EdgeInsets.only(top: 15),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Description',
+            'Mô tả',
             style: TextStyle(
                 fontSize: 18, fontFamily: 'Lato', color: Color(0xFFFFFFFF)),
           ),
@@ -112,16 +112,16 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                 color: Color(0xFFFFFFFF),
               ),
               decoration: InputDecoration(
-                  hintText: 'Do math homework',
-                  hintStyle: TextStyle(
+                  hintText: 'Mô tả nhiệm vụ',
+                  hintStyle: const TextStyle(
                     fontSize: 18,
                     fontFamily: 'Lato',
                     color: Color(0xFFAFAFAF),
                   ),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4),
-                      borderSide:
-                          BorderSide(width: 1, color: Color(0xFF979797)))),
+                      borderSide: const BorderSide(
+                          width: 1, color: Color(0xFF979797)))),
               autofocus: false,
             ),
           ),
@@ -132,23 +132,23 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
 
   Widget _buildTaskPriority() {
     return Container(
-      margin: EdgeInsets.only(top: 15),
+      margin: const EdgeInsets.only(top: 15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Text(
-            'Task priority:',
+            'Ưu tiên nhiệm vụ:',
             style: TextStyle(
                 fontSize: 18, fontFamily: 'Lato', color: Color(0xFFAFAFAF)),
           ),
           Container(
-            margin: EdgeInsets.only(top: 4, left: 4),
+            margin: const EdgeInsets.only(top: 4, left: 4),
             child: Container(
               decoration: BoxDecoration(
                   border: Border.all(width: 1, color: Color(0xFF8687E7)),
                   borderRadius: BorderRadius.circular(4)),
-              padding: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               child: Row(
                 children: [
                   Image.asset(
@@ -175,18 +175,18 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
 
   Widget _buildTaskCategory() {
     return Container(
-      margin: EdgeInsets.only(top: 15),
+      margin: const EdgeInsets.only(top: 15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Text(
-            'Task category: ',
+            'Hạng mục nhiệm vụ: ',
             style: TextStyle(
                 fontSize: 18, fontFamily: 'Lato', color: Color(0xFFAFAFAF)),
           ),
           Container(
-            margin: EdgeInsets.only(top: 10, left: 10),
+            margin: const EdgeInsets.only(top: 10, left: 10),
             child: _buildGridCategoryItems(_categorySelected!),
           ),
         ],
@@ -202,7 +202,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Task time: ',
+            'Thời gian làm: ',
             style: TextStyle(
                 fontSize: 18, fontFamily: 'Lato', color: Color(0xFFAFAFAF)),
           ),
@@ -429,11 +429,11 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
       _taskDateTimeSelected = null;
       _categorySelected = null;
       setState(() {
-        _showAlert('Successfully', 'Added Task!');
+        _showAlert('Thành công', 'Đã thêm nhiệm vụ!');
       });
     } catch (e) {
       print(e);
-      _showAlert('Fail', 'No Add');
+      _showAlert('Lỗi', 'Không thêm được');
     }
   }
 

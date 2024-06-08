@@ -22,7 +22,7 @@ class _ProfilePageState extends State<ProfilePage> {
           TextButton(
             onPressed: _showLogoutConfirmationDialog,
             child: const Text(
-              'Logout',
+              'Đăng xuất',
               style: TextStyle(
                   fontSize: 30,
                   color: Color(0xFFFF4949),
@@ -39,20 +39,20 @@ class _ProfilePageState extends State<ProfilePage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Confirm Logout'),
-          content: const Text('Are you sure you want to log out?'),
+          title: const Text('Xác nhận đăng xuất'),
+          content: const Text('Bạn có chắc chắn bạn muốn thoát?'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
-              child: const Text('Cancel'),
+              child: const Text('Hủy bỏ'),
             ),
             TextButton(
               onPressed: () {
                 FirebaseAuth.instance.signOut();
               },
-              child: const Text('Yes'),
+              child: const Text('Có'),
             ),
           ],
         );

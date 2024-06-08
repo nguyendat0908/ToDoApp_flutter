@@ -390,7 +390,7 @@ class _RegisterViewState extends State<RegisterView> {
 
   void _gotoLoginPage(BuildContext context) {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => LoginView()));
+        context, MaterialPageRoute(builder: (context) => const LoginView()));
   }
 
   void _onTapRegister() {

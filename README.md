@@ -17,7 +17,7 @@
 
 2. Mở thư mục dự án này bằng **VS Code**:
    ```bash
-   code flutter_docker
+   cd ToDoApp_flutter
    ```
 
 3.
